@@ -5,7 +5,12 @@ export default {
     './src/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      container: {
+        center: true,
+        padding: '2rem',
+      },
+    },
   },
   plugins: [
     require('@tailwindcss/forms'),
