@@ -7,6 +7,7 @@ import { getUserData } from '../../utils/User/GetUserData';
 import { handleReload } from '../../utils/HandleReload';
 import NavBar from '../NavBar';
 import Posts from '../Posts/Posts';
+import EditProfile from './EditProfile';
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -47,8 +48,11 @@ const Profile = () => {
                   <button className="px-6 py-2 rounded-full bg-gray-700 text-white">
                     Message
                   </button>
-                  <button className="px-6 py-2 rounded-full bg-gray-300 text-gray-700">
-                    Add Friend
+                  <button onClick={()=>{
+                    handleReload('/edit-profile');
+                  }}
+                   className="px-6 py-2 rounded-full bg-gray-300 text-gray-700">
+                    Edit profile
                   </button>
                 </div>
               </div>

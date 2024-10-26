@@ -15,7 +15,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data: res } = await api.post('/auth', data); 
+      const { data: res } = await api.post('/auth/login', data); 
       storeUserData(res.token, res.user)
       window.location.href = 'home'
     } catch (error) {

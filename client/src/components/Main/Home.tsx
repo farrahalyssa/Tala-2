@@ -10,7 +10,6 @@ import { handleReload } from '../../utils/HandleReload';
 const Home: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
-
   // Fetch user data once on mount
   useEffect(() => {
     const userData = getUserData();

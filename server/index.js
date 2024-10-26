@@ -1,11 +1,16 @@
 require('dotenv').config()
+require('./models/userModel'); 
+require('./models/postModel'); 
 
 const express = require('express')
 const app = express()
 const cors = require('cors')
 const connection = require('./db')
-const userRoutes = require('./routes/users')
-const authRoutes = require('./routes/auth')
+const authRoutes = require('./routes/authRoutes')
+const postRoutes = require('./routes/postRoutes')
+const userRoutes = require('./routes/userRoutes');
+
+
 //database connection
 connection();
 
@@ -15,8 +20,9 @@ app.use(cors())
 
 
 // routes
-app.use('/api/users', userRoutes)
-app.use('/api/auth', authRoutes )
+app.use('/api/auth', authRoutes)
+app.use('/api/post', postRoutes)
+app.use('/api/users', postRoutes)
 
 
 const port = process.env.PORT || 8080

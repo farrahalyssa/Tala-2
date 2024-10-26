@@ -1,25 +1,29 @@
 import React, { Fragment, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { HomeIcon, ChatBubbleLeftIcon, UserPlusIcon, BellIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { HomeIcon, ChatBubbleLeftIcon, UserPlusIcon, BellIcon, Bars3Icon, XMarkIcon, MagnifyingGlassIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import TalaLogo from '../assets/tala/tala-darkbg.png'; 
 import { clearUserData } from '../utils/User/ClearUserData';
 import { getUserData } from '../utils/User/GetUserData';
 import { useNavigate, Link } from 'react-router-dom';
 import { User } from '../utils/User/UserType';
 import { handleReload } from '../utils/HandleReload';
-
+import api from '../utils/api';
+import axios from 'axios';
 const navigation = [
   { name: 'Home', href: '/', icon: HomeIcon },
   { name: 'Messages', href: '/messages', icon: ChatBubbleLeftIcon },
   { name: 'Requests', href: '/requests', icon: UserPlusIcon },
 ];
 
-function classNames(...classes: string[]) {
+function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 export default function NavBar() {
   const [user, setUser] = useState<User | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [results, setResults] = useState<User[]>([]);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const navigate = useNavigate();
 
   const userData = getUserData();
@@ -32,6 +36,26 @@ export default function NavBar() {
   const handleLogout = () => {
     clearUserData();
     navigate('/login');
+  };
+
+  const handleSearch = async (searchQuery) => {
+    if (!searchQuery) return;
+    console.log('meow',searchQuery)
+    try {
+      const response = await axios.get('http://localhost:8080/api/users/search', {
+        params: { query: searchQuery },
+    });
+      console.log('Response:', response.data); 
+      setResults(response.data);
+    } catch (error) {
+      console.error('Error searching users:', error);
+      setResults([]);
+    }
+  };
+
+  const handleResultClick = (userId) => {
+    navigate(`/profile/${userId}`);
+    setResults([]); 
   };
 
   if (!user) {
@@ -48,43 +72,105 @@ export default function NavBar() {
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
+              {/* Mobile menu button */}
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                  <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                  ) : (
-                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                  )}
-                </Disclosure.Button>
+                {isSearchOpen ? (
+                  <button
+                    className="p-2 bg-transparent text-gray-400 hover:text-white rounded-md"
+                    onClick={() => setIsSearchOpen(false)}
+                  >
+                    <ArrowLeftIcon className="h-5 w-5" aria-hidden="true" />
+                  </button>
+                ) : (
+                  <Disclosure.Button className="bg-transparent inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                    <span className="sr-only">Open main menu</span>
+                    {open ? (
+                      <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                    ) : (
+                      <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                    )}
+                  </Disclosure.Button>
+                )}
               </div>
+
+              {/* Logo or Search Bar for small screens */}
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex flex-shrink-0 items-center">
-                  <img className="h-8 w-auto" src={TalaLogo} alt="Tala" />
-                </div>
-                <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex">
-                    {navigation.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.href}
-                        className={classNames(
-                          window.location.pathname === item.href
-                            ? 'bg-custom-highlight text-white'
-                            : 'text-gray-300 hover:bg-custom-highlight hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium flex items-center'
-                        )}
-                      >
-                        <item.icon className="h-6 w-6 mr-2" aria-hidden="true" />
-                      </Link>
-                    ))}
+                {!isSearchOpen ? (
+                  <div className="flex flex-shrink-0 items-center">
+                    <img className="h-8 w-auto" src={TalaLogo} alt="Tala" />
                   </div>
+                ) : (
+                  <form className="w-80 px-4 sm:hidden -ml-20 mr-5" onSubmit={(e) => { e.preventDefault(); handleSearch(searchQuery); }}>
+                    <input
+                      type="text"
+                      className="w-80 rounded-md border border-gray-700 bg-transparent text-gray-100 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-custom-highlight focus:border-transparent"
+                      placeholder="Search..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                  </form>
+                )}
+
+                {/* Search Bar for Larger Screens */}
+                <form className="hidden sm:flex flex-1 items-center justify-center max-w-lg mx-auto" onSubmit={(e) => { e.preventDefault(); handleSearch(searchQuery); }}>
+                  <input
+                    type="text"
+                    className="w-full rounded-md border border-gray-700 bg-transparent text-gray-100 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-custom-highlight focus:border-transparent"
+                    placeholder="Search..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </form>
+
+                {/* User Results Dropdown */}
+                {results.length > 0 && (
+                  <ul className="absolute z-10 mt-2 w-full bg-white rounded-md shadow-lg max-h-60 overflow-y-auto">
+                    {results.map((user) => (
+                      <li
+                        key={user.userId}
+                        className="cursor-pointer hover:bg-gray-100 p-2"
+                        onClick={() => handleResultClick(user.userId)}
+                      >
+                        {user.firstName} {user.lastName} 
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {/* Navigation Links for Larger Screens */}
+                <div className="hidden sm:ml-6 sm:flex sm:space-x-4">
+                  {navigation.map((item) => (
+                    <Link
+                      key={item.name}
+                      onClick={() => handleReload(item.href)}
+                      to={item.href}
+                      className={classNames(
+                        window.location.pathname === item.href
+                          ? 'bg-custom-highlight text-white'
+                          : 'text-gray-400 hover:text-white',
+                        'rounded-md px-3 py-2 text-sm font-medium flex items-center'
+                      )}
+                    >
+                      <item.icon className="h-6 w-6 mr-2" aria-hidden="true" />
+                    </Link>
+                  ))}
                 </div>
               </div>
+
+              {/* Icons and User Menu */}
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                {!isSearchOpen && (
+                  <button
+                    className="sm:hidden rounded-full bg-transparent p-1 mr-2 text-gray-400 hover:text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                    onClick={() => setIsSearchOpen(true)}
+                  >
+                    <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
+                  </button>
+                )}
+
                 <button
                   type="button"
-                  className="rounded-full bg-gray-700 bg-opacity-50 p-1 text-gray-400 shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                  className="rounded-full bg-transparent p-1 hover:text-white text-gray-400 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                 >
                   <span className="sr-only">View notifications</span>
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
@@ -105,12 +191,12 @@ export default function NavBar() {
                     as={Fragment}
                     enter="transition ease-out duration-100"
                     enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
+                    enterTo="opacity-100 scale-100"
                     leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
+                    leaveFrom="opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ">
+                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
                           <a
@@ -120,67 +206,68 @@ export default function NavBar() {
                             }}
                             className={classNames(
                               active ? 'bg-gray-100 text-gray-800' : '',
-                              'block px-4 py-2 text-sm text-gray-700 hover:text-grey-500'
-                            )}
-                          >
-                            Your Profile
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(
-                              active ? 'bg-gray-100 text-gray-800' : '',
-                              'block px-4 py-2 text-sm text-gray-700 hover:text-grey-500'
-                            )}
-                          >
-                            Settings
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            onClick={handleLogout}
-                            className={classNames(
-                              active ? 'bg-gray-100 text-gray-800' : '',
-                              'block px-4 py-2 text-sm text-gray-700 hover:text-grey-500'
-                            )}
-                          >
-                            Sign out
-                          </a>
-                        )}
-                      </Menu.Item>
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
+                              'block px-4 py-2 text-sm text-gray-700 hover:text-gray-500'
+                              )}
+                            >
+                              Your Profile
+                            </a>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="#"
+                              className={classNames(
+                                active ? 'bg-gray-100 text-gray-800' : '',
+                                'block px-4 py-2 text-sm text-gray-700 hover:text-gray-500'
+                              )}
+                            >
+                              Settings
+                            </a>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              onClick={handleLogout}
+                              className={classNames(
+                                active ? 'bg-gray-100 text-gray-800' : '',
+                                'block px-4 py-2 text-sm text-gray-700 hover:text-gray-500'
+                              )}
+                            >
+                              Sign out
+                            </a>
+                          )}
+                        </Menu.Item>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                </div>
               </div>
             </div>
-          </div>
-
-          <Disclosure.Panel className="sm:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as={Link}
-                  to={item.href}
-                  className={classNames(
-                    window.location.pathname === item.href
-                      ? 'bg-custom-highlight text-white'
-                      : 'text-gray-300 hover:bg-custom-highlight hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium'
-                  )}
-                >
-                  <item.icon className="h-6 w-6 mr-2" aria-hidden="true" />
-                </Disclosure.Button>
-              ))}
-            </div>
-          </Disclosure.Panel>
-        </>
-      )}
-    </Disclosure>
-  );
-}
+  
+            <Disclosure.Panel className="sm:hidden">
+              <div className="space-y-1 px-2 pb-3 pt-2">
+                {navigation.map((item) => (
+                  <Disclosure.Button
+                    key={item.name}
+                    as={Link}
+                    to={item.href}
+                    className={classNames(
+                      window.location.pathname === item.href
+                        ? 'bg-custom-highlight text-white'
+                        : 'text-gray-400 hover:text-white',
+                      'block rounded-md px-3 py-2 text-base font-medium'
+                    )}
+                  >
+                    <item.icon className="h-6 w-6 mr-2" aria-hidden="true" />
+                  </Disclosure.Button>
+                ))}
+              </div>
+            </Disclosure.Panel>
+          </>
+        )}
+      </Disclosure>
+    );
+  }
+  

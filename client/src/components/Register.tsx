@@ -3,6 +3,7 @@ import TalaLogo from '../assets/tala/tala-darkbg.png';
 import { Link } from 'react-router-dom';
 import api from '../utils/api';
 import { storeUserData } from '../utils/User/storeUserData';
+import { handleReload } from '../utils/HandleReload';
 const Register = () => {
 
   const [data, setData] = useState({
@@ -21,9 +22,9 @@ const Register = () => {
   const handleSubmit = async (e) => {
       e.preventDefault();
       try{
-        const { data: res } = await api.post('/users', data); 
+        const { data: res } = await api.post('/auth/register', data); 
         storeUserData(res.token, res.user)
-        window.location.href = '/home'
+        window.location.href = '/home'; 
         console.log(res.message);
 
       }
