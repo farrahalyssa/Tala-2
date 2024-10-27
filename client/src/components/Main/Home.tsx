@@ -13,6 +13,7 @@ const Home: React.FC = () => {
   // Fetch user data once on mount
   useEffect(() => {
     const userData = getUserData();
+
     if (!userData) {
       handleReload();
     } else {
