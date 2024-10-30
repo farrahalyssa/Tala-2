@@ -4,12 +4,13 @@ import { User } from '../../utils/User/UserType';
 import { getUserData } from '../../utils/User/GetUserData';
 import { handleReload } from '../../utils/HandleReload';
 import NavBar from '../NavBar';
-
+import api from '../../utils/api';
 const EditProfile = () => {
   const [user, setUser] = useState<User | null>(null);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [bio, setBio] = useState('');
+  const [profilePicture, setProfilePicture] = useState('');
 
   useEffect(() => {
     const userData = getUserData();
@@ -20,6 +21,7 @@ const EditProfile = () => {
       setFirstName(userData.firstName || '');
       setLastName(userData.lastName || '');
       setBio(userData.bio || '');
+      setProfilePicture(userData.profile?.profilePicture || '');
     }
   }, []);
 
@@ -29,18 +31,40 @@ const EditProfile = () => {
     if (name === 'lastName') setLastName(value);
     if (name === 'bio') setBio(value);
   };
-
-  const handleSaveChanges = () => {
-    const updatedUser = { ...user, firstName, lastName, bio };
-    console.log('Updated User:', updatedUser);
-    handleReload('/profile');
+  const handleSaveChanges = async () => {
+    if (!user) return;
+  
+    const updatedUser = {
+      ...(firstName && { firstName }),
+      ...(lastName && { lastName }),
+      ...(bio && { bio }),
+      ...(profilePicture && { profilePicture }),
+    };
+  
+    console.log('updated user', updatedUser)
+    try {
+      const response = await api.put(`users/profile/${user.userId}`, 
+      updatedUser);
+  
+      if (response.status === 200) {
+        console.log('Profile updated:', response.data.user);
+        
+        handleReload('profile')
+      } else {
+        console.error('Failed to update profile:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
+  
+  
 
   return (
     <div className="min-h-screen w-full flex flex-col items-center">
       <NavBar />
       <main className="w-full max-w-2xl mt-10">
-        <section className="relative  shadow-md rounded-xl overflow-hidden">
+        <section className="relative shadow-md rounded-xl overflow-hidden">
           <img
             src={DefaultBanner}
             alt="cover-image"
@@ -48,7 +72,7 @@ const EditProfile = () => {
           />
           <div className="flex flex-col items-center -mt-16">
             <img
-              src="https://i.pinimg.com/564x/6b/1e/58/6b1e58e2f70b14528111ee7c1dd0f855.jpg"
+              src={profilePicture || 'https://i.pinimg.com/564x/6b/1e/58/6b1e58e2f70b14528111ee7c1dd0f855.jpg'}
               alt="user-avatar"
               className="w-32 h-32 border-4 border-gray-300 rounded-full object-cover"
             />
@@ -67,7 +91,7 @@ const EditProfile = () => {
                 value={lastName}
                 onChange={handleInputChange}
                 placeholder="Last Name"
-                className="w-full mt-4 border bg-transparent border-gray-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                className="w-full mt-4 bg-transparent border border-gray-700 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
               />
               <textarea
                 name="bio"

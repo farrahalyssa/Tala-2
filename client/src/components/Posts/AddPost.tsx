@@ -10,7 +10,7 @@ const AddPost = () => {
   const [description, setDescription] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Auto-resize function for the textarea
+  //better code for thus
   const autoResize = () => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';

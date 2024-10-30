@@ -22,7 +22,7 @@ app.use(cors())
 // routes
 app.use('/api/auth', authRoutes)
 app.use('/api/post', postRoutes)
-app.use('/api/users', postRoutes)
+app.use('/api/users', userRoutes)
 
 
 const port = process.env.PORT || 8080

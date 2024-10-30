@@ -7,7 +7,6 @@ import { getUserData } from '../../utils/User/GetUserData';
 import { handleReload } from '../../utils/HandleReload';
 import NavBar from '../NavBar';
 import Posts from '../Posts/Posts';
-import EditProfile from './EditProfile';
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -43,7 +42,7 @@ const Profile = () => {
                 <h3 className="text-2xl font-bold text-gray-300 mt-4">
                   {user?.firstName} {user?.lastName}
                 </h3>
-                <p className="text-sm text-gray-400">I like creating</p>
+                <p className="text-sm text-gray-400">{user?.bio}</p>
                 <div className="mt-4 flex gap-4">
                   <button className="px-6 py-2 rounded-full bg-gray-700 text-white">
                     Message

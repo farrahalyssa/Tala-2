@@ -45,7 +45,6 @@ const Posts = () => {
     );
   }
   
-//animate ping
   return (
     <div className="mt-10 space-y-8">
       <div className="space-y-6">

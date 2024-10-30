@@ -1,5 +1,6 @@
 const { User, complexityOptions } = require('../../models/userModel');
 const bcrypt = require('bcrypt');
+const { profile } = require('console');
 const Joi = require('joi');
 const passwordComplexity = require('joi-password-complexity');
 
@@ -18,6 +19,7 @@ exports.loginUser = async (req, res) => {
             return res.status(401).send({ message: 'Invalid Email or Password' });
 
         const token = user.generateAuthToken();
+        
         res.status(200).send({
             message: 'Logged in successfully',
             token,
@@ -25,9 +27,13 @@ exports.loginUser = async (req, res) => {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
-                userId: user._id
+                userId: user._id,
+                bio: user.bio,
+                profilePicture: profile.Picture,
+                active: true,
             },
         });
+        console.log(user.bio)
     } catch (error) {
         console.error(error);
         res.status(500).send({ message: 'Internal Server Error' });
