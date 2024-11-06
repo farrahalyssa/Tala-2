@@ -29,7 +29,7 @@ exports.loginUser = async (req, res) => {
                 email: user.email,
                 userId: user._id,
                 bio: user.bio,
-                profilePicture: profile.Picture,
+                profilePicture: user.profile.Picture,
                 active: true,
             },
         });

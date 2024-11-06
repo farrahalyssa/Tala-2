@@ -56,12 +56,14 @@ const AddPost = () => {
   
 
   return (
+
     <div className="mt-10">
       <form onSubmit={handlePostSubmit} className="flex flex-col space-y-2">
-        <div className="relative w-full mt-2">
+        
+        <div className="relative w-100 mt-2">
           <textarea
             ref={textareaRef}
-            className="p-3 w-full mt-1 bg-white bg-opacity-10 pr-20 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-700 resize-none overflow-hidden text-white placeholder-gray-400"
+            className="p-3 w-100 mt-1 bg-white bg-opacity-10 pr-20 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-gray-700 resize-none overflow-hidden text-white placeholder-gray-400"
             rows={3}
             placeholder={`What's on your mind, ${user?.firstName}?`}
             value={description}

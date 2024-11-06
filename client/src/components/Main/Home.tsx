@@ -31,25 +31,10 @@ const Home: React.FC = () => {
   return (
     <div className="min-h-screen">
       <NavBar />
-      <main className="flex justify-center w-full px-4">
-        <div
-          className="
-            w-full 
-            sm:w-[280px] 
-            md:w-[480px] 
-            lg:w-[660px] 
-            xl:w-[900px]             
-            p-6 
-            md:p-10 
-            shadow-lg 
-            rounded-lg
-          "
-        >
+      <div className="mt-4 mx-auto w-75">
           <AddPost />
-
             <Posts />
-        </div>
-      </main>
+            </div>
     </div>
   );
 };

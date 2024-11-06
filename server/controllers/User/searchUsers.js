@@ -15,6 +15,7 @@ const searchUsers = async (req, res) => {
         });
         
         res.status(200).send(users);
+        console.log(users);
     } catch (error) {
         console.error('Error fetching users:', error);
         res.status(500).send({ message: 'Internal Server Error' });
