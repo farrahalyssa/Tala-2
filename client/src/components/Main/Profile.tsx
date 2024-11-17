@@ -37,7 +37,6 @@ const Profile = () => {
         <p className="text-muted text-center">{user?.bio}</p>
         
         <div className="flex gap-2 mt-3" style={{ maxWidth: '290px', width: '100%' }}>
-          <button className="btn btn-dark flex-grow px-6 py-2 rounded-pill">Message</button>
           <button
             onClick={() => navigate('/edit-profile')}
             className="btn btn-light text-dark flex-grow px-6 py-2 rounded-pill"
