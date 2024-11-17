@@ -274,7 +274,7 @@ export default function NavBar() {
                           <a
                             onClick={(e) => {
                               e.preventDefault();
-                              handleReload('/profile');
+                              navigate('/profile');
                             }}
                             className={classNames(
                               active ? 'bg-gray-100 text-gray-800' : '',
