@@ -16,7 +16,17 @@ connection();
 
 //middelwares
 app.use(express.json())
-app.use(cors());
+app.use(cors({
+    origin: 'https://tala-app.netlify.app', // Allow your Netlify frontend
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+    credentials: true,
+    origin: true,
+}));
+
+
+app.options('*', cors());
+// routes
 app.use('/api/auth', authRoutes)
 app.use('/api/post', postRoutes)
 app.use('/api/users', userRoutes)
