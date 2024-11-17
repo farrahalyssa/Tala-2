@@ -7,6 +7,7 @@ import { getUserData } from '../utils/User/GetUserData';
 import { useNavigate, Link } from 'react-router-dom';
 import { User } from '../utils/User/UserType';
 import { handleReload } from '../utils/HandleReload';
+import Loading from '../utils/loading';
 import api from '../utils/api';
 import axios from 'axios';
 const navigation = [
@@ -34,8 +35,9 @@ export default function NavBar() {
   }
 
   const handleLogout = () => {
-    clearUserData();
     navigate('/login');
+    clearUserData();
+
   };
 
   const handleSearch = async (searchQuery) => {
@@ -62,8 +64,8 @@ export default function NavBar() {
   if (!user) {
     return (
       <h1 className="text-center mt-20 text-xl text-gray-300">
-        Loading...
-      </h1>
+<        Loading/>
+     </h1>
     );
   }
 
