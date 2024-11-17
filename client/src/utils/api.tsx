@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://tala-app-server.vercel.app/api',
+  baseURL: 'http://tala-app-server.vercel.app/api',
   headers: {
     'Content-Type': 'application/json',
   },
