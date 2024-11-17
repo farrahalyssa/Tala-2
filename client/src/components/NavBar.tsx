@@ -133,9 +133,15 @@ export default function NavBar() {
     <ul className="absolute z-10 w-full max-w-lg bg-white border border-dark border-t-0 rounded-b-md shadow-lg max-h-60 overflow-y-auto">
       {results.map((user) => (
         <li
+<<<<<<< HEAD
           key={user.userId || user._id}
           className="cursor-pointer text-left ml-3 hover:text-gray-500 hover:bg-gray-100 p-2 text-gray-700"
           onClick={() => handleResultClick(user.userId || user._id)}
+=======
+          key={user.userId}
+          className="cursor-pointer text-left ml-3 hover:text-gray-500 hover:bg-gray-100 p-2 text-gray-700"
+          onClick={() => handleResultClick(user.userId)}
+>>>>>>> f6d6bce4d1d78d3a43491a153a8f1b5c71de9659
         >
           {user.firstName} {user.lastName} 
         </li>
@@ -182,9 +188,15 @@ export default function NavBar() {
     <ul className="absolute z-10 w-full max-w-lg bg-white  border border-dark  border-t-0 rounded-b-md shadow-lg max-h-60 overflow-y-auto">
       {results.map((user) => (
         <li
+<<<<<<< HEAD
           key={user.userId || user._id}
           className="cursor-pointer text-left ml-3 hover:text-gray-500 hover:bg-gray-100 p-2 text-gray-700"
           onClick={() => handleResultClick(user.userId || user._id) }
+=======
+          key={user.userId}
+          className="cursor-pointer text-left ml-3 hover:text-gray-500 hover:bg-gray-100 p-2 text-gray-700"
+          onClick={() => handleResultClick(user.userId)}
+>>>>>>> f6d6bce4d1d78d3a43491a153a8f1b5c71de9659
         >
           {user.firstName} {user.lastName} 
         </li>
