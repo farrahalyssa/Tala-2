@@ -16,7 +16,13 @@ connection();
 
 //middelwares
 app.use(express.json())
-app.use(cors({ origin: `${process.env.CLIENT_URL}` }));
+const corsOptions = {
+    origin: `${process.env.CLIENT_URL}`,
+    methods: 'GET,POST,PUT,DELETE', 
+    allowedHeaders: 'Content-Type,Authorization', 
+};
+
+app.use(cors(corsOptions));
 
 
 // routes
