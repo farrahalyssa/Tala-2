@@ -16,14 +16,16 @@ connection();
 
 //middelwares
 app.use(express.json())
-const corsOptions = {
-    origin: `${process.env.CLIENT_URL}`,
-    methods: 'GET,POST,PUT,DELETE', 
-    allowedHeaders: 'Content-Type,Authorization', 
-};
-
-app.use(cors(corsOptions));
-
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'https://tala-app.netlify.app'); 
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS'); // Allow HTTP methods
+    res.setHeader('Access-Control-Allow-Headers', '*'); 
+    if (req.method === 'OPTIONS') {
+        res.status(200).end(); // Preflight request handling
+        return;
+    }
+    next();
+});
 
 // routes
 app.use('/api/auth', authRoutes)
