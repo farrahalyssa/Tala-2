@@ -1,3 +1,4 @@
+import { User } from "../../utils/User/UserType";
 export interface Post {
     id: string;
     userName: string;
@@ -5,5 +6,11 @@ export interface Post {
     description: string;
     createdAt: string;
     likes: number;
-    comments: { id: string; content: string }[];
+    comments: Array<{
+      text: string;
+      createdAt: string;
+      postedBy: User | string; 
+    }>;
+    postedBy: string | User;
+ 
   }

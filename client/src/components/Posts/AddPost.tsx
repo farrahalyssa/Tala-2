@@ -10,7 +10,7 @@ const AddPost = () => {
   const [description, setDescription] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  //better code for thus
+  //better code for this
   const autoResize = () => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
@@ -52,23 +52,27 @@ const AddPost = () => {
     } catch (error) {
       console.error('Error creating post:', error);
     }
+    handleReload();
+
   };
   
 
   return (
-    <div className="mt-10">
+
+    <div className="mx-auto">
+      <div className="w-full sm:w-[280px] md:w-[480px] lg:w-[660px] xl:w-[900px] p-6 md:p-10 shadow-lg rounded-lg">
       <form onSubmit={handlePostSubmit} className="flex flex-col space-y-2">
-        <div className="relative w-full mt-2">
+        
+        <div className="relative w-100 mt-2">
           <textarea
             ref={textareaRef}
-            className="p-3 w-full mt-1 bg-white bg-opacity-10 pr-20 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-700 resize-none overflow-hidden text-white placeholder-gray-400"
+            className="p-3 w-100 mt-1 bg-white bg-opacity-10 pr-20 border border-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-gray-700 resize-none overflow-hidden text-white placeholder-gray-400"
             rows={3}
             placeholder={`What's on your mind, ${user?.firstName}?`}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             onInput={autoResize}
           />
-
           <div className="absolute bottom-4 right-2 flex space-x-2">
             {/* Image Upload Button (Disabled) */}
             <label className="p-2 rounded-full bg-gray-300 text-gray-700 hover:bg-gray-400 cursor-pointer">
@@ -91,9 +95,11 @@ const AddPost = () => {
             >
               Post
             </button>
-          </div>
+            </div>
+        
         </div>
       </form>
+   </div>
     </div>
   );
 };

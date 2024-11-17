@@ -5,12 +5,17 @@ import { getUserData } from '../../utils/User/GetUserData';
 import { handleReload } from '../../utils/HandleReload';
 import NavBar from '../NavBar';
 import api from '../../utils/api';
+import { storeUserData } from '../../utils/User/storeUserData';
+import { useNavigate } from 'react-router-dom';
+
 const EditProfile = () => {
   const [user, setUser] = useState<User | null>(null);
+  const [userId, setUserId] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [bio, setBio] = useState('');
   const [profilePicture, setProfilePicture] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userData = getUserData();
@@ -18,6 +23,7 @@ const EditProfile = () => {
       handleReload();
     } else {
       setUser(userData);
+      setUserId(userData.userId || '');
       setFirstName(userData.firstName || '');
       setLastName(userData.lastName || '');
       setBio(userData.bio || '');
@@ -31,25 +37,34 @@ const EditProfile = () => {
     if (name === 'lastName') setLastName(value);
     if (name === 'bio') setBio(value);
   };
-  const handleSaveChanges = async () => {
-    if (!user) return;
-  
+
+  const handleSaveChanges = async (userId) => {
+    if (!userId) {
+      console.error("User ID is missing!");
+      return; // Stop execution if userId is not available
+    }
+
     const updatedUser = {
+      userId: user?.userId || user?._id,
       ...(firstName && { firstName }),
       ...(lastName && { lastName }),
       ...(bio && { bio }),
       ...(profilePicture && { profilePicture }),
     };
-  
-    console.log('updated user', updatedUser)
+
+    console.log('Updated user object:', updatedUser);
+
     try {
-      const response = await api.put(`users/profile/${user.userId}`, 
-      updatedUser);
-  
+      let user = getUserData();
+      let userId = user?.userId || user?._id;
+      const response = await api.put(`users/profile/${userId}`, updatedUser);
       if (response.status === 200) {
         console.log('Profile updated:', response.data.user);
-        
-        handleReload('profile')
+        storeUserData(null, response.data.user);
+        const updatedUserData = getUserData();
+        setUser(updatedUserData);
+        console.log('Updated user data after save:', updatedUserData);
+        navigate('/profile');
       } else {
         console.error('Failed to update profile:', response.statusText);
       }
@@ -57,24 +72,17 @@ const EditProfile = () => {
       console.error('Error:', error);
     }
   };
-  
-  
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center">
+    <div className="min-h-screen">
       <NavBar />
-      <main className="w-full max-w-2xl mt-10">
-        <section className="relative shadow-md rounded-xl overflow-hidden">
-          <img
-            src={DefaultBanner}
-            alt="cover-image"
-            className="w-full h-44 object-cover"
-          />
+      <main className="flex justify-center w-full px-4">
+        <div className="w-full sm:w-[280px] md:w-[480px] lg:w-[660px] xl:w-[900px] p-6 md:p-10 shadow-lg rounded-lg">
           <div className="flex flex-col items-center -mt-16">
             <img
-              src={profilePicture || 'https://i.pinimg.com/564x/6b/1e/58/6b1e58e2f70b14528111ee7c1dd0f855.jpg'}
+              src="https://i.pinimg.com/564x/6b/1e/58/6b1e58e2f70b14528111ee7c1dd0f855.jpg"
               alt="user-avatar"
-              className="w-32 h-32 border-4 border-gray-300 rounded-full object-cover"
+              className="w-32 h-32 mt-20 border-4 border-white rounded-full"
             />
             <div className="mt-4 w-full px-6">
               <input
@@ -111,7 +119,7 @@ const EditProfile = () => {
               </button>
             </div>
           </div>
-        </section>
+        </div>
       </main>
     </div>
   );

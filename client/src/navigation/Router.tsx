@@ -5,6 +5,7 @@ import Register from '../components/Register';
 import Home from '../components/Main/Home';
 import Profile from '../components/Main/Profile';
 import EditProfile from '../components/Main/EditProfile';
+import ExternalProfile from '../components/Main/ExternalProfile';
 const isAuthenticated = () => {
   return !!localStorage.getItem('token');
 };
@@ -19,6 +20,7 @@ function Router() {
         <Route path="/register" element={isAuthenticated() ? <Navigate to="/home" /> : <Register />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/external-profile/:userId" element={<ExternalProfile />} />
 
       </Routes>
     </BrowserRouter>

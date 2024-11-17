@@ -1,17 +1,25 @@
 const Post = require('../../models/postModel');
 
 exports.getUserPosts = async (req, res) => {
-  const { userId } = req.params;
-  console.log(req.params); 
-
+  let { userId } = req.params;
+  console.log('yur',req.params); 
+  let posts;
   try {
-    const userPosts = await Post.find({ postedBy: userId })
-      .populate('postedBy', 'firstName lastName') 
-      .sort({ createdAt: -1 });
+    const posts = await Post.find({ postedBy: userId })
+    .populate({
+      path: 'postedBy',
+      select: 'firstName lastName profile.profilePicture',
+    })
+    .sort({ createdAt: -1 })
+    .exec();
 
-    res.status(200).send(userPosts, );
-  } catch (error) {
-    console.error('Error fetching user posts:', error);
-    res.status(500).send({ message: 'Internal Server Error' });
+  if (!posts || posts.length === 0) {
+    return res.status(404).json({ message: 'No posts found for this user.' });
   }
+
+  res.status(200).json(posts);
+} catch (error) {
+  console.error('Error fetching posts:', error);
+  res.status(500).json({ message: 'Internal Server Error' });
+}
 };

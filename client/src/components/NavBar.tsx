@@ -39,7 +39,8 @@ export default function NavBar() {
   };
 
   const handleSearch = async (searchQuery) => {
-    if (!searchQuery) return;
+  if (!searchQuery) {
+      setResults([]); }
     console.log('meow',searchQuery)
     try {
       const response = await axios.get('http://localhost:8080/api/users/search', {
@@ -54,7 +55,7 @@ export default function NavBar() {
   };
 
   const handleResultClick = (userId) => {
-    navigate(`/profile/${userId}`);
+    navigate(`/external-profile/${userId}`);
     setResults([]); 
   };
 
@@ -100,49 +101,108 @@ export default function NavBar() {
                     <img className="h-8 w-auto" src={TalaLogo} alt="Tala" />
                   </div>
                 ) : (
-                  <form className="w-80 px-4 sm:hidden -ml-20 mr-5" onSubmit={(e) => { e.preventDefault(); handleSearch(searchQuery); }}>
-                    <input
-                      type="text"
-                      className="w-80 rounded-md border border-gray-700 bg-transparent text-gray-100 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-custom-highlight focus:border-transparent"
-                      placeholder="Search..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                  </form>
-                )}
-
-                {/* Search Bar for Larger Screens */}
-                <form className="hidden sm:flex flex-1 items-center justify-center max-w-lg mx-auto" onSubmit={(e) => { e.preventDefault(); handleSearch(searchQuery); }}>
-                  <input
-                    type="text"
-                    className="w-full rounded-md border border-gray-700 bg-transparent text-gray-100 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-custom-highlight focus:border-transparent"
-                    placeholder="Search..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
+                  <form className="relative w-80 px-4 sm:hidden -ml-20 mr-5" onSubmit={(e) => { e.preventDefault(); handleSearch(searchQuery); }}>
+                  
+<div className='w-full'>
+  {!searchQuery ? (
+    <MagnifyingGlassIcon 
+      className="absolute left-3  top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-700" 
+      aria-hidden="true" 
+    />
+  ): (
+    <button 
+      type="button"
+      onClick={() => {setSearchQuery(''); 
+                      setResults([]);}} 
+ className="absolute right-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-700 hover:text-gray-400 bg-transparent"
+  aria-label="Clear search"
+    >
+          <XMarkIcon className="h-4 w-4" aria-hidden="true" />
+    </button>
+  )}
+  
+  <input
+    type="text"
+    className={`w-full pl-10 border border-dark bg-transparent  text-gray-100 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-custom-highlight focus:border-transparent ${
+      results.length > 0 ? 'rounded-md rounded-b-none' : 'rounded-md'
+    }`}    placeholder="  Search"
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+  />
+  {results.length > 0 && searchQuery==='' && (
+    <ul className="absolute z-10 w-full max-w-lg bg-white border border-dark border-t-0 rounded-b-md shadow-lg max-h-60 overflow-y-auto">
+      {results.map((user) => (
+        <li
+          key={user.userId || user._id}
+          className="cursor-pointer text-left ml-3 hover:text-gray-500 hover:bg-gray-100 p-2 text-gray-700"
+          onClick={() => handleResultClick(user.userId || user._id)}
+        >
+          {user.firstName} {user.lastName} 
+        </li>
+      ))}
+    </ul>
+  )}
+  </div>
                 </form>
-
-                {/* User Results Dropdown */}
-                {results.length > 0 && (
-                  <ul className="absolute z-10 mt-2 w-full bg-white rounded-md shadow-lg max-h-60 overflow-y-auto">
-                    {results.map((user) => (
-                      <li
-                        key={user.userId}
-                        className="cursor-pointer hover:bg-gray-100 p-2"
-                        onClick={() => handleResultClick(user.userId)}
-                      >
-                        {user.firstName} {user.lastName} 
-                      </li>
-                    ))}
-                  </ul>
+                
                 )}
+
+               {/* Search Bar for Larger Screens */}
+<form 
+  className="hidden   sm:flex flex-1 items-center justify-center max-w-lg mx-auto relative" 
+  onSubmit={(e) => { e.preventDefault(); handleSearch(searchQuery); }}
+>
+<div className='w-full'>
+{!searchQuery ? (
+    <MagnifyingGlassIcon 
+      className="absolute left-3 mr-2 top-1/2  transform -translate-y-1/2 h-4 w-4 text-gray-700" 
+      aria-hidden="true" 
+    />
+  ): (
+    <button 
+      type="button"
+      onClick={() =>  {setSearchQuery(''); 
+      setResults([]);}} 
+      className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-700 hover:text-gray-400 bg-transparent"
+      aria-label="Clear search"
+    >
+      <XMarkIcon className="h-4 w-4" aria-hidden="true" />
+    </button>
+  )}
+  
+  <input
+    type="text"
+    className={`w-full pl-10 border border-dark bg-transparent text-gray-100 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-custom-highlight focus:border-transparent ${
+      results.length > 0 ? 'rounded-md rounded-b-none' : 'rounded-md'
+    }`}    placeholder="  Search"
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+  />
+  {results.length > 0 && (
+    <ul className="absolute z-10 w-full max-w-lg bg-white  border border-dark  border-t-0 rounded-b-md shadow-lg max-h-60 overflow-y-auto">
+      {results.map((user) => (
+        <li
+          key={user.userId || user._id}
+          className="cursor-pointer text-left ml-3 hover:text-gray-500 hover:bg-gray-100 p-2 text-gray-700"
+          onClick={() => handleResultClick(user.userId || user._id) }
+        >
+          {user.firstName} {user.lastName} 
+        </li>
+      ))}
+    </ul>
+  )}
+  </div>
+</form>
+
+
+              
 
                 {/* Navigation Links for Larger Screens */}
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-4">
                   {navigation.map((item) => (
                     <Link
                       key={item.name}
-                      onClick={() => handleReload(item.href)}
+                      onClick={() => navigate(item.href)}
                       to={item.href}
                       className={classNames(
                         window.location.pathname === item.href
