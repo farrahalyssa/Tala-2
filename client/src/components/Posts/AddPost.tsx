@@ -59,7 +59,7 @@ const AddPost = () => {
 
   return (
 
-    <div className="mx-auto">
+    <div className="flex flex-col justify-center items-center space-y-8">
       <div className="w-full sm:w-[280px] md:w-[480px] lg:w-[660px] xl:w-[900px] p-6 md:p-10 shadow-lg rounded-lg">
       <form onSubmit={handlePostSubmit} className="flex flex-col space-y-2">
         

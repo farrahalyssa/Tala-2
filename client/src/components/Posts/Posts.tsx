@@ -15,6 +15,7 @@ let Posts: React.FC<PostsProps> = ({ userId }) => {
   let [user, setUser] = useState<User | null>(null); // Use the User type
   let [posts, setPosts] = useState<Post[]>([]); // Use the Post type
   const [loading, setLoading] = useState<boolean>(true);
+  
 
   useEffect(() => {
     
@@ -68,7 +69,7 @@ let Posts: React.FC<PostsProps> = ({ userId }) => {
   return (
     <div className=" space-y-8">
       {posts.length === 0 ? (
-        <p className="text-gray-400 text-center">No posts yet. Be the first to post!</p>
+        <p className="text-gray-400 text-center">No posts available.</p>
       ) : (
         posts.map((post) => (
           <div key={post.id} className="p-4 rounded-md text-white">

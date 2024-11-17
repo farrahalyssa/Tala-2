@@ -25,5 +25,5 @@ app.use('/api/post', postRoutes)
 app.use('/api/users', userRoutes)
 
 
-const port = process.env.PORT
+const port = process.env.PORT || 8080
 app.listen(port, ()=> console.log(`Server running on port ${port}`))
