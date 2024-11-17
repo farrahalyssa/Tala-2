@@ -9,3 +9,7 @@ declare module '*.png' {
   }
   
 
+  declare module '@/utils/User/storeUserData' {
+    export const storeUserData: (data: any) => void;
+    export default storeUserData;
+}
