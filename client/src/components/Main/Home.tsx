@@ -5,6 +5,7 @@ import { User } from '../../utils/User/UserType';
 import NavBar from '../NavBar';
 import AddPost from '../Posts/AddPost';
 import Posts from '../Posts/Posts';
+import Loading from '../../utils/loading';
 import { handleReload } from '../../utils/HandleReload';
 
 const Home: React.FC = () => {
@@ -23,9 +24,7 @@ const Home: React.FC = () => {
 
   if (!user) {
     return (
-      <h1 className="text-center mt-20 text-xl text-gray-300">
-        Loading...
-      </h1>
+      <Loading />
     );
   }
 

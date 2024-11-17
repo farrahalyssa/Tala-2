@@ -35,9 +35,8 @@ export default function NavBar() {
   }
 
   const handleLogout = () => {
-    navigate('/login');
+    window.location.href = ('/login');
     clearUserData();
-
   };
 
   const handleSearch = async (searchQuery) => {
@@ -63,9 +62,7 @@ export default function NavBar() {
 
   if (!user) {
     return (
-      <h1 className="text-center mt-20 text-xl text-gray-300">
-<        Loading/>
-     </h1>
+        <Loading/>
     );
   }
 
