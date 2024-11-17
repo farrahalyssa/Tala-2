@@ -1,18 +1,21 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080/api',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  baseURL: 'https://tala-app-server.vercel.app/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
-  api.interceptors.request.use((config) => {
+api.interceptors.request.use(
+  (config) => {
     const token = localStorage.getItem('token');
     if (token) {
       config.headers['x-auth-token'] = token;
     }
     return config;
-  });
-  
-  export default api;
+  },
+  (error) => Promise.reject(error)
+);
+
+export default api;

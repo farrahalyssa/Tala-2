@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import TalaLogo from '../assets/tala/tala-darkbg.png';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import api from '../utils/api';
 import { storeUserData } from '../utils/User/storeUserData';
 const Login = () => {
