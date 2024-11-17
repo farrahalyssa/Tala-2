@@ -30,7 +30,6 @@ const Home: React.FC = () => {
   }
 
   return (
-<<<<<<< HEAD
     <div className="min-h-screen mx-auto">
     <NavBar />
     <main className="flex justify-center w-full px-4">
@@ -41,15 +40,6 @@ const Home: React.FC = () => {
       </div>
     </main>
       </div>
-=======
-    <div className="min-h-screen">
-      <NavBar />
-      <div className="mt-4 mx-auto w-75">
-          <AddPost />
-            <Posts />
-            </div>
-    </div>
->>>>>>> f6d6bce4d1d78d3a43491a153a8f1b5c71de9659
   );
 };
 
