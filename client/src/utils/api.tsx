@@ -1,10 +1,7 @@
 import axios from 'axios';
-import dotenv from 'dotenv';
 
-dotenv.config();
 const api = axios.create({
-    baseURL: `${process.env.API_URL}/api`,
-    // 'http://localhost:8080/api',
+    baseURL: 'http://localhost:8080/api',
     headers: {
       'Content-Type': 'application/json',
     },
