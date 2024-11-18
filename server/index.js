@@ -1,36 +1,44 @@
-require('dotenv').config()
-require('./models/userModel'); 
-require('./models/postModel'); 
+require('dotenv').config();
+require('./models/userModel');
+require('./models/postModel');
 
-const express = require('express')
+const express = require('express');
 const serverless = require('serverless-http');
+const cors = require('cors');
+const accessControlAllow = require('./accessControlAllow');
 
-const app = express()
-const cors = require('cors')
-
-const connection = require('./db')
-const authRoutes = require('./routes/authRoutes')
-const postRoutes = require('./routes/postRoutes')
+const connection = require('./db');
+const authRoutes = require('./routes/authRoutes');
+const postRoutes = require('./routes/postRoutes');
 const userRoutes = require('./routes/userRoutes');
 
+const app = express();
 
-//database connection
+// Database connection
 connection();
 
-
-//middelwares
+// Middlewares
 app.use(cors({
-    origin: 'https://tala-app.netlify.app'})
-);
+    origin: ['https://tala-app.netlify.app', 'http://localhost:5173'], // Explicit array for allowed origins
+    credentials: true, 
+}));
 
+// Access Control Middleware
+app.use(accessControlAllow);
 
-app.use(express.json())
-// routes
-app.use('/api/auth', authRoutes)
-app.use('/api/post', postRoutes)
-app.use('/api/users', userRoutes)
+// Parse JSON bodies
+app.use(express.json());
 
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/post', postRoutes);
+app.use('/api/users', userRoutes);
 
-const port = process.env.PORT || 5001
-app.listen(port, ()=> console.log(`Server running on port ${port}`))
+// Server and Serverless Configuration
+const port = process.env.PORT || 5002;
+
+if (process.env.NODE_ENV !== 'serverless') {
+    app.listen(port, () => console.log(`Server running on port ${port}`));
+}
+
 module.exports.handler = serverless(app);
