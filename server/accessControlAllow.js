@@ -1,14 +1,5 @@
 
 
-const allowedOrigins = [
-  "https://tala-app.netlify.app",
-  "http://localhost:5173"
-];
-// const origin = req.headers.origin;
-// if (allowedOrigins.includes(origin)) {
-//   res.setHeader("Access-Control-Allow-Origin", origin);
-// }
-
 const accessControlAllow = (req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", '*');
   res.setHeader("Access-Control-Allow-Credentials", "true");
