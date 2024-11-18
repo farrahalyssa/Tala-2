@@ -17,7 +17,7 @@ connection();
 
 // Middlewares
 app.use(cors({
-    origin: ['https://tala-app.netlify.app', 'http://localhost:5173'], // Allow listed origins
+    origin: 'https://tala-app.netlify.app', // Allow listed origins
     credentials: true, // Allow credentials
     methods: ['GET', 'POST', 'OPTIONS', 'DELETE', 'PUT', 'PATCH'], // Allowed HTTP methods
 }));
