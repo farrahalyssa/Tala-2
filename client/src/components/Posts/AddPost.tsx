@@ -9,6 +9,7 @@ const AddPost = () => {
   const [user, setUser] = useState<User | null>(null);
   const [description, setDescription] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const token = localStorage.getItem('token');
 
   //better code for this
   const autoResize = () => {
@@ -41,16 +42,21 @@ const AddPost = () => {
            
       formData.append('description', description);
       formData.append('postedBy', user?.userId || '');
-
+      console.log('Posted by:', user?.userId || '');
       const response = await axios.post(
         'http://localhost:5003/api/post/createPost',
-        formData,
         {
-            headers: {
-                'Content-Type': 'multipart/form-data', // Use appropriate type for formData
-            },
+          description,
+          postedBy: user?.userId || '',
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-    );
+      );
+      console.log('Response:', formData);
+      
     
   
       if (response.status === 201) {

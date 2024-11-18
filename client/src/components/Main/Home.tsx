@@ -14,14 +14,13 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const userData = getUserData();
-
     if (!userData) {
       handleReload();
     } else {
       setUser(userData);
     }
   }, []);
-
+  console.log('User:', user);
   if (!user) {
     return (
       <Loading />

@@ -1,6 +1,4 @@
 require('dotenv').config();
-require('./models/userModel');
-require('./models/postModel');
 
 const express = require('express');
 const cors = require('cors');
@@ -16,15 +14,8 @@ connection();
 
 
 // CORS Middleware
-app.use(cors({
-    origin: 'http://localhost:5173', // Dynamically allow the appropriate origin
-    credentials: true, // Allow cookies if needed
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'], // Allow these headers
-}));
+app.use(cors());
 
-// Handle preflight OPTIONS requests
-app.options('*', cors());
 
 // Parse JSON bodies
 app.use(express.json());
