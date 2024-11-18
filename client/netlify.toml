@@ -1,0 +1,20 @@
+[[redirects]]
+  from = "/api/*"
+  to = "https://ometer-back.herokuapp.com/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "https://tala-2.onrender.com" # Allow requests from your backend
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type, Authorization, x-auth-token"
+
+[build.environment]
+  REACT_APP_API_BASE_URL = "https://tala-2.onrender.com/api"
