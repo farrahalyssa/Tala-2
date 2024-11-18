@@ -18,6 +18,8 @@ const userRoutes = require('./routes/userRoutes');
 connection();
 
 //middelwares
+app.options('*', cors());
+
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed HTTP methods
