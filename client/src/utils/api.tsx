@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:5001/api' || 'https://tala-2.onrender.com/api',
+    baseURL: 'https://tala-2.onrender.com/api',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
