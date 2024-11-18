@@ -19,7 +19,7 @@ connection();
 
 //middelwares
 app.use(cors({
-    origin: 'http://tala-app.netlify.app' || 'http://localhost:5173', 
+    origin: ['http://tala-app.netlify.app', 'http://localhost:5173'], 
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
     credentials: true, // Allow cookies if needed
