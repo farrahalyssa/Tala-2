@@ -3,6 +3,8 @@ require('./models/userModel');
 require('./models/postModel'); 
 
 const express = require('express')
+const serverless = require('serverless-http');
+
 const app = express()
 const cors = require('cors')
 
@@ -28,3 +30,4 @@ app.use('/api/users', userRoutes)
 
 const port = process.env.PORT || 5001
 app.listen(port, ()=> console.log(`Server running on port ${port}`))
+module.exports.handler = serverless(app);
