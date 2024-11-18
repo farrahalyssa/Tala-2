@@ -3,8 +3,8 @@ import { FaImage } from 'react-icons/fa';
 import { User } from '../../utils/User/UserType';
 import { getUserData } from '../../utils/User/GetUserData';
 import { handleReload } from '../../utils/HandleReload';
-import api from '../../utils/api';
-
+// import api from '../../utils/api';
+import axios from 'axios';
 const AddPost = () => {
   const [user, setUser] = useState<User | null>(null);
   const [description, setDescription] = useState('');
@@ -42,8 +42,16 @@ const AddPost = () => {
       formData.append('description', description);
       formData.append('postedBy', user?.userId || '');
 
-      const response = await api.post('/post/createPost', 
-        formData      );
+      const response = await axios.post(
+        'https://tala-2.vercel.app/api/post/createPost',
+        formData,
+        {
+            headers: {
+                'Content-Type': 'multipart/form-data', // Use appropriate type for formData
+            },
+        }
+    );
+    
   
       if (response.status === 201) {
         setDescription(''); 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TalaLogo from '../assets/tala/tala-darkbg.png';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import api from '../utils/api';
+// import api from '../utils/api';
 import { storeUserData } from '../utils/User/storeUserData';
 const Login = () => {
   const [data, setData] = useState({ password: '', email: '' });
@@ -15,9 +15,21 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data: res } = await api.post('/auth/login', data); 
+      const { data: res } = await axios.post(
+        'http://localhost:5003/api/auth/login',
+        {
+            email: data.email, // Ensure correct fields
+            password: data.password,
+        },
+        {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }
+    );
       storeUserData(res.token, res.user)
       window.location.href = 'home'
+
     } catch (error) {
       if (error.response && error.response.status >= 400 && error.response.status <= 500) {
         setError(error.response.data.message);

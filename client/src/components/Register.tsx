@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import TalaLogo from '../assets/tala/tala-darkbg.png';
 import { Link } from 'react-router-dom';
-import api from '../utils/api';
+// import api from '../utils/api';
+import axios from 'axios';
 import { storeUserData } from '../utils/User/storeUserData';
 import { handleReload } from '../utils/HandleReload';
 const Register = () => {
@@ -22,7 +23,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
       e.preventDefault();
       try{
-        const { data: res } = await api.post('/auth/register', data); 
+        const { data: res } = await axios.post('https://tala-2.vercel.app/api/auth/register', data); 
         storeUserData(res.token, res.user)
         window.location.href = '/home'; 
         console.log(res.message);

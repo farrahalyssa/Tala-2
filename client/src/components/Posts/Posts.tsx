@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { FaHeart, FaComment } from 'react-icons/fa';
 import { Post } from './PostType';
-import api from '../../utils/api';
+// import api from '../../utils/api';
+import axios from 'axios';
 import Loading from '../../utils/loading';
 import { User } from '../../utils/User/UserType';
 interface PostsProps {
@@ -20,7 +21,7 @@ let Posts: React.FC<PostsProps> = ({ userId }) => {
     
     let fetchUserData = async () => {
       try {
-        const response = await api.get(`/users/${userId}`);
+        const response = await axios.get(`https://tala-2.vercel.app/api/users/${userId}`);
         setUser(response.data); 
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -29,7 +30,7 @@ let Posts: React.FC<PostsProps> = ({ userId }) => {
 
     let fetchUserPosts = async () => {
       try {
-        let response = await api.get(`/post/user/${userId}/posts`);
+        let response = await axios.get(`https://tala-2.vercel.app/api/post/user/${userId}/posts`);
         setPosts(response.data); 
         console.log('Fetched user posts:', response.data);
       } catch (error) {

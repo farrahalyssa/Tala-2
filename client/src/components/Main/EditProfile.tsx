@@ -3,7 +3,8 @@ import { User } from '../../utils/User/UserType';
 import { getUserData } from '../../utils/User/GetUserData';
 import { handleReload } from '../../utils/HandleReload';
 import NavBar from '../NavBar';
-import api from '../../utils/api';
+// import api from '../../utils/api';
+import axios from 'axios';
 import { storeUserData } from '../../utils/User/storeUserData';
 import { useNavigate } from 'react-router-dom';
 
@@ -56,7 +57,7 @@ const EditProfile = () => {
     try {
       let user = getUserData();
       let userId = user?.userId || user?._id;
-      const response = await api.put(`users/profile/${userId}`, updatedUser);
+      const response = await axios.put(`https://tala-2.vercel.app/api/users/profile/${userId}`, updatedUser);
       if (response.status === 200) {
         console.log('Profile updated:', response.data.user);
         storeUserData(null, response.data.user);

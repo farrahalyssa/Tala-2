@@ -8,7 +8,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { User } from '../utils/User/UserType';
 import { handleReload } from '../utils/HandleReload';
 import Loading from '../utils/loading';
-import api from '../utils/api';
 import axios from 'axios';
 const navigation = [
   { name: 'Home', href: '/', icon: HomeIcon },
@@ -44,7 +43,7 @@ export default function NavBar() {
       setResults([]); }
     console.log('meow',searchQuery)
     try {
-      const response = await axios.get('http://localhost:8080/api/users/search', {
+      const response = await axios.get('https://tala-2.vercel.app/api/users/search', {
         params: { query: searchQuery },
     });
       console.log('Response:', response.data); 

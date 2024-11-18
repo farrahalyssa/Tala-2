@@ -8,8 +8,8 @@ import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NavBar from '../NavBar';
 import Posts from '../Posts/Posts';
-import api from '../../utils/api';
-
+// import api from '../../utils/api';
+import axios from 'axios';
 const ExternalProfile = () => {
   const [error, setError] = useState<string | null>(null);
   const { userId } = useParams(); 
@@ -20,12 +20,12 @@ const ExternalProfile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await api.get(`/users/${userId}`);
+        const response = await axios.get(`https://tala-2.vercel.app/api/users/${userId}`);
         console.log('Response:', response);
         setUser(response.data);
         console.log('Fetched user:', response.data);
 
-        const friendResponse = await api.get(`/friend-status/${userId}`);
+        const friendResponse = await axios.get(`https://tala-2.vercel.app/api/friend-status/${userId}`);
         setFriendStatus(friendResponse.data.status);
       } catch (err: any) {
         console.error('Fetch error:', err);
@@ -40,7 +40,7 @@ const ExternalProfile = () => {
 
   const handleAddFriend = async () => {
     try {
-      const response = await api.post(`/friend-request/${userId}`);
+      const response = await axios.post(`https://tala-2.vercel.app/api/friend-request/${userId}`);
       console.log('Friend request sent:', response.data);
       setFriendStatus('request_sent');
     } catch (err: any) {

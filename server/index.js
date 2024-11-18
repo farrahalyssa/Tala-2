@@ -4,7 +4,6 @@ require('./models/postModel');
 
 const express = require('express');
 const cors = require('cors');
-const accessControlAllow = require('./accessControlAllow');
 const connection = require('./db');
 const authRoutes = require('./routes/authRoutes');
 const postRoutes = require('./routes/postRoutes');
@@ -15,28 +14,25 @@ const app = express();
 // Database connection
 connection();
 
+// Determine environment
 const isProduction = process.env.NODE_ENV === 'production';
-let origin;
-if (isProduction) {
-    console.log('Running in production mode');
-    origin = 'https://tala-app.netlify.app';
-    // Use production-specific settings, e.g., database URI
-} else {
-    console.log('Running in development mode');
-    origin = 'http://localhost:5173';
-    // Use development-specific settings
-}
-// Middlewares
+const origin = isProduction
+    ? 'https://tala-app.netlify.app' // Production frontend
+    : 'http://localhost:5173'; // Development frontend
+
+console.log(`Running in ${isProduction ? 'production' : 'development'} mode`);
+
+// CORS Middleware
+console.log('Origin:', origin);
 app.use(cors({
-    origin: origin, // Add all allowed origins
-    credentials: true,
-    methods: ['GET', 'POST', 'OPTIONS', 'DELETE', 'PUT', 'PATCH'],
-    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
+    origin, // Dynamically allow the appropriate origin
+    credentials: true, // Allow cookies if needed
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'], // Allow these headers
 }));
 
-
-// Access Control Middleware
-app.use(accessControlAllow);
+// Handle preflight OPTIONS requests
+app.options('*', cors());
 
 // Parse JSON bodies
 app.use(express.json());
@@ -45,16 +41,6 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/users', userRoutes);
-
-// Handle preflight requests
-app.options('*', cors());
-
-// Example route (can be removed or adjusted as needed)
-app.post('/api/auth/login', (req, res) => {
-    res.json({ message: 'CORS configured correctly!' });
-});
-
-
 
 // Start the server
 const port = process.env.PORT || 5003;
