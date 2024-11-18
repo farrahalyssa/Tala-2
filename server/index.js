@@ -34,6 +34,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/users', userRoutes);
+app.options('/api/auth/login', cors());
 
 // Server and Serverless Configuration
 
