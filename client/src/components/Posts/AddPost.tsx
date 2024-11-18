@@ -43,7 +43,7 @@ const AddPost = () => {
       formData.append('postedBy', user?.userId || '');
 
       const response = await axios.post(
-        'https://tala-2.vercel.app/api/post/createPost',
+        'http://localhost:5003/api/post/createPost',
         formData,
         {
             headers: {

@@ -14,16 +14,8 @@ const app = express();
 // Database connection
 connection();
 
-// Determine environment
-const isProduction = process.env.NODE_ENV === 'production';
-const origin = isProduction
-    ? 'https://tala-app.netlify.app' // Production frontend
-    : 'http://localhost:5173'; // Development frontend
-
-console.log(`Running in ${isProduction ? 'production' : 'development'} mode`);
 
 // CORS Middleware
-console.log('Origin:', origin);
 app.use(cors({
     origin: 'http://localhost:5173', // Dynamically allow the appropriate origin
     credentials: true, // Allow cookies if needed
