@@ -21,6 +21,8 @@ connection();
 app.use(cors({
     origin: ['http://localhost:5173'],
     credentials: true, 
+    methods: ['GET', 'POST', 'OPTIONS', 'DELETE', 'PUT', 'PATCH'],
+
 }));
 
 // Access Control Middleware
@@ -35,9 +37,8 @@ app.use('/api/users', userRoutes);
 
 // Server and Serverless Configuration
 const port = process.env.PORT || 5003;
-
 if (process.env.NODE_ENV !== 'serverless') {
-    app.listen(port, () => console.log(`Server running on port ${port}`));
+  app.listen(port, () => console.log(`Server running on port ${port}`));
 }
 
 module.exports.handler = serverless(app);
