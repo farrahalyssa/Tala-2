@@ -5,7 +5,8 @@ module.exports = () =>{
         useUnifiedTopology: true,
         serverSelectionTimeoutMS: 5000, 
       ssl: true,
-      sslValidate: true
+      sslValidate: true,
+      loggerLevel: 'debug',
     }
 
     try{
