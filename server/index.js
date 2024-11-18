@@ -19,12 +19,13 @@ connection();
 
 // Middlewares
 app.use(cors({
-    origin: ['https://tala-app.netlify.app', 'http://localhost:5173'], // Explicit array for allowed origins
+    origin: ['https://tala-app.netlify.app', 'http://localhost:5173'], // Allowed origins
     credentials: true, 
 }));
 
 // Access Control Middleware
 app.use("/api", accessControlAllow);
+app.use(accessControlAllow);
 
 // Parse JSON bodies
 app.use(express.json());
