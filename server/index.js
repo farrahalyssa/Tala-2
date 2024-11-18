@@ -10,6 +10,8 @@ const corsOptions = {
     origin: 'https://tala-app.netlify.app', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add other methods if needed
     credentials: true, // Allow credentials (e.g., cookies, authorization headers)
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token'],
+    
   };
   
 app.use(cors(corsOptions));
