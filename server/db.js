@@ -3,6 +3,7 @@ module.exports = () =>{
     const connectionParams = {
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        serverSelectionTimeoutMS: 0,
       ssl: true,
       sslValidate: true,
       loggerLevel: 'debug',
