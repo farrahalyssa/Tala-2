@@ -24,8 +24,7 @@ app.use(cors({
 }));
 
 // Access Control Middleware
-app.use("/api", accessControlAllow);
-app.use(accessControlAllow);
+app.use("/api", accessControlAllow, authRoutes );
 
 // Parse JSON bodies
 app.use(express.json());
