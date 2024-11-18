@@ -19,9 +19,8 @@ connection();
 
 
 //middelwares
-app.options('*', cors()); // Allow preflight requests
 app.use(cors({
-    origin: 'https://tala-app.netlify.app' || 'http://localhost:5173'})
+    origin: 'https://tala-app.netlify.app'})
 );
 
 
