@@ -17,16 +17,12 @@ const userRoutes = require('./routes/userRoutes');
 //database connection
 connection();
 
-const allowedOrigins = ['https://tala-app.netlify.app', 'http://localhost:5173'];
 
 //middelwares
 app.options('*', cors()); // Allow preflight requests
 app.use(cors({
-    origin: 'https://tala-app.netlify.app' || 'http://localhost:5173',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-}));
+    origin: 'https://tala-app.netlify.app' || 'http://localhost:5173'})
+);
 
 
 app.use(express.json())
