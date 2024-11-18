@@ -18,10 +18,14 @@ const userRoutes = require('./routes/userRoutes');
 connection();
 
 //middelwares
+app.use(cors({
+    origin: 'http://tala-app.netlify.app' || 'http://localhost:5173', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
+    credentials: true, // Allow cookies if needed
+}));
+
 app.use(express.json())
-app.use(cors())
-
-
 // routes
 app.use('/api/auth', authRoutes)
 app.use('/api/post', postRoutes)
