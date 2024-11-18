@@ -43,6 +43,16 @@ app.post('/api/auth/login', (req, res) => {
     res.json({ message: 'CORS configured correctly!' });
 });
 
+
+const isProduction = process.env.NODE_ENV === 'production';
+
+if (isProduction) {
+    console.log('Running in production mode');
+    // Use production-specific settings, e.g., database URI
+} else {
+    console.log('Running in development mode');
+    // Use development-specific settings
+}
 // Start the server
 const port = process.env.PORT || 5003;
 app.listen(port, () => console.log(`Server running on port ${port}`));
