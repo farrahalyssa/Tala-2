@@ -5,7 +5,7 @@ require('./models/postModel');
 const express = require('express');
 const serverless = require('serverless-http');
 const cors = require('cors');
-const {accessControlAllow} = require('./accessControlAllow');
+const accessControlAllow = require('./accessControlAllow');
 
 const connection = require('./db');
 const authRoutes = require('./routes/authRoutes');
@@ -24,7 +24,7 @@ app.use(cors({
 }));
 
 // Access Control Middleware
-app.use(accessControlAllow);
+app.use("/api", accessControlAllow);
 
 // Parse JSON bodies
 app.use(express.json());
