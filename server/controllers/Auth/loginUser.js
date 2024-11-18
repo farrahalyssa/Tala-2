@@ -1,5 +1,5 @@
 const { User, complexityOptions } = require('../../models/userModel');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const { profile } = require('console');
 const Joi = require('joi');
 const passwordComplexity = require('joi-password-complexity');
