@@ -19,13 +19,12 @@ connection();
 
 // Middlewares
 app.use(cors({
-    origin: ['https://tala-2.vercel.app'],
+    origin: ['http://localhost:5173'],
     credentials: true, 
 }));
 
 // Access Control Middleware
-app.use("/api", accessControlAllow, authRoutes );
-
+app.use(accessControlAllow);
 // Parse JSON bodies
 app.use(express.json());
 
