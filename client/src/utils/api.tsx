@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://tala-2.onrender.com/api' || 'http://localhost:5002/api',
+    baseURL: 'http://localhost:5003/api',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -11,8 +11,7 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token'); // Retrieve token from localStorage
   if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`; // Set token in Authorization header
-  }
+    config.headers['x-auth-token'] = token;  }
   return config;
 }, (error) => {
   return Promise.reject(error);

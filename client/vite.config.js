@@ -8,11 +8,8 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api': {
-        target: 'https://tala-2-1.onrender.com',
-        changeOrigin: true,
-        secure: false,
-      },
+      '/api': 'https://tala-2-1.onrender.com' ,
+       
     },
   }
 });

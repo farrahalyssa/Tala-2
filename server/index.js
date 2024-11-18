@@ -36,7 +36,7 @@ app.use('/api/post', postRoutes);
 app.use('/api/users', userRoutes);
 
 // Server and Serverless Configuration
-const port = process.env.PORT || 5002;
+const port = process.env.PORT || 5003;
 
 if (process.env.NODE_ENV !== 'serverless') {
     app.listen(port, () => console.log(`Server running on port ${port}`));

@@ -7,7 +7,7 @@ if (!FRONTEND_URL) {
 }
 
 const accessControlAllow = (req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", FRONTEND_URL);
+  res.setHeader("Access-Control-Allow-Origin", 'https://tala-app.netlify.app');
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS");
   res.header(
