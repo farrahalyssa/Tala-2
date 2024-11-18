@@ -1,7 +1,10 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://tala-2.vercel.app/api',
+    baseURL:
+    process.env.NODE_ENV === 'production'
+        ?  'https://tala-2.vercel.app/api'
+        : 'http://localhost:5003/api',
     headers: {
       'Content-Type': 'application/json',
     },
