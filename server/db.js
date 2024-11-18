@@ -3,6 +3,9 @@ module.exports = () =>{
     const connectionParams = {
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        serverSelectionTimeoutMS: 5000, 
+      ssl: true,
+      sslValidate: true
     }
 
     try{
