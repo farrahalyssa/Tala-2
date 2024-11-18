@@ -1,11 +1,10 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://tala-2-1.onrender.com/api',
+    baseURL: 'https://localhost:8080/api',
     headers: {
       'Content-Type': 'application/json',
     },
-    withCredentials: true,
   });
 
   api.interceptors.request.use((config) => {

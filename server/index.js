@@ -6,16 +6,6 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 
-const corsOptions = {
-    origin: 'https://tala-app.netlify.app', 
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Add other methods if needed
-    credentials: true, // Allow credentials (e.g., cookies, authorization headers)
-    allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token'],
-    
-  };
-  
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); 
 const connection = require('./db')
 const authRoutes = require('./routes/authRoutes')
 const postRoutes = require('./routes/postRoutes')
