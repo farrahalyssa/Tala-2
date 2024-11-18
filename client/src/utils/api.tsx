@@ -12,7 +12,7 @@ const api = axios.create({
     (config) => {
         const token = localStorage.getItem('token'); // Retrieve token from localStorage
         if (token) {
-            config.headers['x-auth-token'] = token; // Attach token
+            config.headers['Authorization'] = token; // Attach token
         }
         return config;
     },
