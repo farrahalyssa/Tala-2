@@ -59,8 +59,12 @@ const AddPost = () => {
 
   return (
 
+<<<<<<< HEAD
     <div className="mx-auto">
       <div className="w-full sm:w-[280px] md:w-[480px] lg:w-[660px] xl:w-[900px] p-6 md:p-10 shadow-lg rounded-lg">
+=======
+    <div className="mt-10">
+>>>>>>> f6d6bce4d1d78d3a43491a153a8f1b5c71de9659
       <form onSubmit={handlePostSubmit} className="flex flex-col space-y-2">
         
         <div className="relative w-100 mt-2">
