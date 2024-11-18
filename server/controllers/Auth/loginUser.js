@@ -5,6 +5,9 @@ const Joi = require('joi');
 const passwordComplexity = require('joi-password-complexity');
 
 exports.loginUser = async (req, res) => {
+    if (req.method !== 'POST') {
+        return res.status(405).send({ message: 'Method Not Allowed' });
+    }
     try {
         const { error } = validateLogin(req.body);
         if (error) 
