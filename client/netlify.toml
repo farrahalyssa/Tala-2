@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/api/*"
+  to = "https://tala-2.vercel.app/:splat"
+  status = 200
+  force = true

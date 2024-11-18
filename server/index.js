@@ -25,7 +25,7 @@ console.log(`Running in ${isProduction ? 'production' : 'development'} mode`);
 // CORS Middleware
 console.log('Origin:', origin);
 app.use(cors({
-    origin, // Dynamically allow the appropriate origin
+    origin: '*', // Dynamically allow the appropriate origin
     credentials: true, // Allow cookies if needed
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'], // Allow these headers
