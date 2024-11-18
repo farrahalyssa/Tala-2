@@ -18,14 +18,14 @@ const userRoutes = require('./routes/userRoutes');
 connection();
 
 //middelwares
-app.options('*', cors());
-
+app.options('*', cors()); // Allow preflight requests
 app.use(cors({
     origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
-    credentials: true, // Allow cookies if needed
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, // Include this if you're using cookies
 }));
+
 
 app.use(express.json())
 // routes
