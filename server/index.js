@@ -12,7 +12,8 @@ const corsOptions = {
     credentials: true, // Allow credentials (e.g., cookies, authorization headers)
   };
   
-  app.use(cors(corsOptions));
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); 
 const connection = require('./db')
 const authRoutes = require('./routes/authRoutes')
 const postRoutes = require('./routes/postRoutes')
