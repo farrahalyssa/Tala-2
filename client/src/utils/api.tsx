@@ -8,12 +8,16 @@ const api = axios.create({
   });
 
   
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token'); // Retrieve token from localStorage
-  if (token) {
-    config.headers['x-auth-token'] = token;  }
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-});
+  api.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('token'); // Retrieve token from localStorage
+        if (token) {
+            config.headers['x-auth-token'] = token; // Attach token
+        }
+        return config;
+    },
+    (error) => Promise.reject(error) // Handle request errors
+);
+
+
   export default api;
