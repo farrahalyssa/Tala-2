@@ -15,9 +15,20 @@ const app = express();
 // Database connection
 connection();
 
+const isProduction = process.env.NODE_ENV === 'production';
+let origin;
+if (isProduction) {
+    console.log('Running in production mode');
+    origin = 'https://tala-app.netlify.app';
+    // Use production-specific settings, e.g., database URI
+} else {
+    console.log('Running in development mode');
+    origin = 'http://localhost:5173';
+    // Use development-specific settings
+}
 // Middlewares
 app.use(cors({
-    origin: ['https://tala-app.netlify.app', 'http://localhost:5173'], // Add all allowed origins
+    origin: origin, // Add all allowed origins
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS', 'DELETE', 'PUT', 'PATCH'],
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
@@ -44,15 +55,7 @@ app.post('/api/auth/login', (req, res) => {
 });
 
 
-const isProduction = process.env.NODE_ENV === 'production';
 
-if (isProduction) {
-    console.log('Running in production mode');
-    // Use production-specific settings, e.g., database URI
-} else {
-    console.log('Running in development mode');
-    // Use development-specific settings
-}
 // Start the server
 const port = process.env.PORT || 5003;
 app.listen(port, () => console.log(`Server running on port ${port}`));
