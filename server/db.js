@@ -3,8 +3,6 @@ module.exports = () =>{
     const connectionParams = {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        connectTimeoutMS: 20000, 
-        socketTimeoutMS: 45000, 
     }
 
     try{
