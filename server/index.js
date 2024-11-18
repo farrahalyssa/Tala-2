@@ -6,7 +6,7 @@ const express = require('express')
 const serverless = require('serverless-http');
 
 const app = express()
-const cors = require('cors')
+// const cors = require('cors')
 
 const connection = require('./db')
 const authRoutes = require('./routes/authRoutes')
@@ -17,22 +17,20 @@ const userRoutes = require('./routes/userRoutes');
 //database connection
 connection();
 
-const allowedOrigins = ['https://tala-app.netlify.app', 'http://localhost:5173'];
+// const allowedOrigins = ['https://tala-app.netlify.app', 'http://localhost:5173'];
 
 //middelwares
-app.options('*', cors()); // Allow preflight requests
-app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-}));
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'https://tala-app.netlify.app');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    if (req.method === 'OPTIONS') {
+        return res.status(204).end(); // Handle preflight
+    }
+    next();
+});
+
 
 
 app.use(express.json())
