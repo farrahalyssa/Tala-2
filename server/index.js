@@ -9,15 +9,13 @@ const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
-// Database connection
 connection();
 
 
-// CORS Middleware
-app.use(cors());
+app.use(cors( {
+    origin: 'http://localhost:5173',
+}));
 
-
-// Parse JSON bodies
 app.use(express.json());
 
 // Routes
