@@ -13,7 +13,7 @@ connection();
 
 
 app.use(cors( {
-    origin: "*",}));
+    origin: ["http://localhost:5173", "https://tala-app.netlify.app"],}));
 
 app.use(express.json());
 
