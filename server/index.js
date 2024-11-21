@@ -17,6 +17,15 @@ app.use(cors( {
     credentials: true
 }));
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Allows all origins
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Allowed HTTP methods
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allowed headers
+    res.setHeader('Access-Control-Allow-Credentials', true); // Allow credentials (if needed)
+    next();
+});
+
+
 app.use(express.json());
 
 // Routes

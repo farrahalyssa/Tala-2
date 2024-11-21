@@ -30,7 +30,7 @@ let Posts: React.FC<PostsProps> = ({ userId }) => {
 
     let fetchUserPosts = async () => {
       try {
-        let response = await axios.get(`http://localhost:5003/api/post/user/${userId}/posts`);
+        let response = await axios.get(`http://tala-2.vercel.app/api/post/user/${userId}/posts`);
         setPosts(response.data); 
         console.log('Fetched user posts:', response.data);
       } catch (error) {
