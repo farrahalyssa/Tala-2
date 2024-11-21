@@ -16,7 +16,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const { data: res } = await axios.post(
-        'http://tala-2.vercel.app/api/auth/login',
+        'http://localhost:5003/api/auth/login',
         {
             email: data.email, // Ensure correct fields
             password: data.password,

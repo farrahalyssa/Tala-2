@@ -13,7 +13,7 @@ connection();
 
 
 app.use(cors( {
-    origin: 'https://localhost:5173',
+    origin: ['http://localhost:5173', 'https://tala-app.netlify.app'],
     credentials: true
 }));
 
