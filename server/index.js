@@ -12,8 +12,7 @@ const app = express();
 connection();
 
 
-app.use(cors( {
-    origin: ["http://localhost:5173", "https://tala-app.netlify.app"],}));
+app.use(cors());
 
 app.use(express.json());
 
