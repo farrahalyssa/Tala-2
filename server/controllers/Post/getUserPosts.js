@@ -1,16 +1,6 @@
 const Post = require('../../models/postModel');
 
 exports.getUserPosts = async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173'); 
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-
-    if (req.method === 'OPTIONS') {
-        return res.status(200).end();
-    }
-    if (req.method === 'GET') {
-
   let { userId } = req.params;
   let posts;
   try {
@@ -30,8 +20,5 @@ exports.getUserPosts = async (req, res) => {
 } catch (error) {
   console.error('Error fetching posts:', error);
   res.status(500).json({ message: 'Internal Server Error' });
-}}
-res.status(405).json({ message: 'Method not allowed' }); 
-
-
+}
 };

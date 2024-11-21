@@ -13,8 +13,8 @@ interface PostsProps {
 
 let Posts: React.FC<PostsProps> = ({ userId }) => {
   console.log('Received userId for post:', userId)
-  let [user, setUser] = useState<User | null>(null); // Use the User type
-  let [posts, setPosts] = useState<Post[]>([]); // Use the Post type
+  let [user, setUser] = useState<User | null>(null); 
+  let [posts, setPosts] = useState<Post[]>([]); 
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {

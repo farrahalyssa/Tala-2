@@ -13,17 +13,7 @@ connection();
 
 
 app.use(cors( {
-    origin: ['http://localhost:5173', 'https://tala-app.netlify.app'],
-    credentials: true
-}));
-
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*'); // Allows all origins
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Allowed HTTP methods
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allowed headers
-    res.setHeader('Access-Control-Allow-Credentials', true); // Allow credentials (if needed)
-    next();
-});
+    origin: ['http://localhost:5173', 'https://tala-app.netlify.app']}));
 
 
 app.use(express.json());
