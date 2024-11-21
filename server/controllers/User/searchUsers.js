@@ -1,4 +1,4 @@
-const { User } = require('../../models/userModel'); // Adjust path if necessary
+const { User } = require('../../models/userModel'); 
 
 const searchUsers = async (req, res) => {
     const query = req.query.query;

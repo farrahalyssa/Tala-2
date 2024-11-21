@@ -10,16 +10,13 @@ const getUserData = async (req, res) => {
     return res.status(400).send({ message: 'No userId provided.' });
   }
 
-  // Validate userId as a MongoDB ObjectId
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     return res.status(400).send({ message: 'Invalid userId format.' });
   }
 
   try {
-    // Convert userId to ObjectId
     const userObjectId = new mongoose.Types.ObjectId(userId);
 
-    // Query the database
     const userData = await User.findOne({ _id: userObjectId }).lean();
 
     if (!userData) {

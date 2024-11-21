@@ -2,7 +2,6 @@ const Post = require('../../models/postModel');
 
 exports.getUserPosts = async (req, res) => {
   let { userId } = req.params;
-  console.log('yur',req.params); 
   let posts;
   try {
     const posts = await Post.find({ postedBy: userId })
