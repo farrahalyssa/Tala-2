@@ -10,7 +10,7 @@ exports.createPost = async (req, res) => {
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
     }
-    if (req.method === 'GET') {
+    if (req.method === 'POST') {
 
   const { description, postedBy } = req.body;
 
