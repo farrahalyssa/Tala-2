@@ -57,7 +57,7 @@ const EditProfile = () => {
     try {
       let user = getUserData();
       let userId = user?.userId || user?._id;
-      const response = await axios.patch(`http://localhost:5003/api/users/profile/${userId}`, updatedUser);
+      const response = await axios.patch(`/api/users/profile/${userId}`, updatedUser);
       if (response.status === 200) {
         console.log('Profile updated:', response.data.user);
         storeUserData(null, response.data.user);

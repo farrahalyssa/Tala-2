@@ -41,9 +41,8 @@ export default function NavBar() {
   const handleSearch = async (searchQuery) => {
   if (!searchQuery) {
       setResults([]); }
-    console.log('meow',searchQuery)
     try {
-      const response = await axios.get('http://localhost:5003/api/users/search', {
+      const response = await axios.get('/api/users/search', {
         params: { query: searchQuery },
     });
       console.log('Response:', response.data); 

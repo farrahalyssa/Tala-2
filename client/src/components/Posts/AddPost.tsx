@@ -44,7 +44,7 @@ const AddPost = () => {
       formData.append('postedBy', user?.userId || '');
       console.log('Posted by:', user?.userId || '');
       const response = await axios.post(
-        'http://localhost:5003/api/post/createPost',
+        '/api/post/createPost',
         {
           description,
           postedBy: user?.userId || '',

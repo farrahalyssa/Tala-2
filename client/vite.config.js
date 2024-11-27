@@ -8,7 +8,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api': 'https://tala-2-1.onrender.com' ,
+      '/api': 'https://tala-2.vercel.app' ,
        
     },
   }
