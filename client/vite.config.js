@@ -10,9 +10,11 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'https://tala-2.vercel.app',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        changeOrigin: true, // Ensures the Host header is rewritten
+        secure: true, // Set to false if HTTPS has self-signed certificates
+        rewrite: (path) => path.replace(/^\/api/, ''), // Optional: rewrite path if needed
       },
     },
-  },  
+  },
+  
 });
