@@ -8,8 +8,11 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api': 'https://tala-2.vercel.app/', 
-      
+      '/api': {
+        target: 'https://tala-2.vercel.app',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
     },
-  }
+  },  
 });
