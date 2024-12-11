@@ -10,7 +10,11 @@ const postRoutes = require('./api/routes/postRoutes');
 const userRoutes = require('./api/routes/userRoutes');
 
 const app = express();
-app.use(express.static('dist'));
+
+app.use(express.static('../client/dist'));
+app.get('*', (req, res) => {
+    res.sendFile(path.join('../client/dist', 'index.html'));
+  });
 
 connection();
 
