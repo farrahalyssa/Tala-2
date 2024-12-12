@@ -23,6 +23,7 @@
     "joi-password-complexity": "^5.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.2",
+    "path": "^0.12.7",
     "semver": "^7.6.3",
     "serverless-http": "^3.2.0"
   },
