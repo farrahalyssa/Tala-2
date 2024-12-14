@@ -18,15 +18,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
+
 app.get('*', (_, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/index.html')),
-  function (err){
+  res.sendFile(path.join(__dirname, '../client/dist'), (err) => {
     if (err) {
-      res.status(500).send(err)
+      res.status(500).send(err);
     }
-  }
-  
-})
+  });
+});
+
 app.use(cors());
 
 // Routes
