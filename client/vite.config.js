@@ -6,9 +6,4 @@ export default defineConfig({
   optimizeDeps: {
     include: ['@fortawesome/free-solid-svg-icons'],
   },
-  server: {
-    proxy: {
-      '/api': 'https://tala-2-6190a44d1b9d.herokuapp.com/', 
-    },
-  }
 });
