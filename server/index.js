@@ -17,9 +17,13 @@ connection();
 app.use(express.json());
 
 
- app.use(cors());
+ const allowedOrigins = ['https://tala-2.netlify.app', 'http://localhost:5173'];
 
-
+ app.use(cors({
+   origin: allowedOrigins,
+   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+   credentials: true, 
+ }));
 
 // Routes
 app.use('/api/auth', authRoutes);
