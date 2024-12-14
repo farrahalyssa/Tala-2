@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 
 const cors = require('cors');
-
+const path = require('path');
 const connection = require('./db');
 const authRoutes = require('./routes/authRoutes');
 const postRoutes = require('./routes/postRoutes');
@@ -15,15 +15,19 @@ const app = express();
 connection();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, '../client/dist')));
 
-
- const allowedOrigins = ['https://tala-2.netlify.app', 'http://localhost:5173'];
-
- app.use(cors({
-   origin: allowedOrigins,
-   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-   credentials: true, 
- }));
+app.get('*', (_, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html')),
+  function (err){
+    if (err) {
+      res.status(500).send(err)
+    }
+  }
+  
+})
+app.use(cors());
 
 // Routes
 app.use('/api/auth', authRoutes);

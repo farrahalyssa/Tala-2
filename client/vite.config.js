@@ -8,7 +8,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api': 'https://tala-a65e084c325b.herokuapp.com/', 
+      '/api': 'http://localhost:5003', 
     },
   }
 });
