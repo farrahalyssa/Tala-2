@@ -1,5 +1,9 @@
 {
   "dependencies": {
-    "bcryptjs": "^2.4.3"
+    "bcryptjs": "^2.4.3",
+    "rollup": "^4.28.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2"
   }
 }
